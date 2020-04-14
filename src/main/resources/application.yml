@@ -59,4 +59,3 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
-  type-aliases-package: com.jxyzh11.springbootdemo.entity
