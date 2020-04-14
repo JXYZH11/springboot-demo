@@ -1,6 +1,9 @@
 package com.jxyzh11.springbootdemo.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jxyzh11.springbootdemo.entity.User;
+import com.jxyzh11.springbootdemo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,11 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "api")
 public class ApiController {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping(value = "get")
-    public JSONObject get(String id) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        return jsonObject;
+    public User get(User user) {
+        user = userService.get(user);
+        return user;
     }
 
     @PostMapping(value = "post")

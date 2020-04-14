@@ -95,6 +95,7 @@
 
         <!--记录druid-sql的记录-->
         <logger name="druid.sql.Statement" level="debug" additivity="false">
+            <appender-ref ref="Console"/>
             <appender-ref ref="druidSqlRollingFile"/>
         </logger>
 
