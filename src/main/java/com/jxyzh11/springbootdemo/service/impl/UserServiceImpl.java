@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
     private UserDao dao;
 
     public User get(User user) {
-        int num = 1 / 0;
         return dao.get(user);
     }
 }

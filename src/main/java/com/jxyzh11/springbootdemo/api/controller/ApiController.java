@@ -6,8 +6,11 @@ import com.jxyzh11.springbootdemo.config.exception.GlobalException;
 import com.jxyzh11.springbootdemo.config.exception.SystemErrorCodeEnum;
 import com.jxyzh11.springbootdemo.entity.User;
 import com.jxyzh11.springbootdemo.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.processing.SupportedAnnotationTypes;
 
 /**
  * @ClassName: ApiController
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020/4/14 11:13
  * @Version: 1.0
  */
+@Slf4j
 @RestController
 @RequestMapping(value = "api")
 public class ApiController {
@@ -31,6 +35,7 @@ public class ApiController {
         try {
             user = userService.get(user);
         } catch (Exception e) {
+            log.error("e", e);
             throw new GlobalException(SystemErrorCodeEnum.EXCEPTION);
         }
         return user;
