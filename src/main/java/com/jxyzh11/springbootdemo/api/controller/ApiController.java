@@ -1,6 +1,9 @@
 package com.jxyzh11.springbootdemo.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jxyzh11.springbootdemo.UserErrorCodeEnum;
+import com.jxyzh11.springbootdemo.config.exception.GlobalException;
+import com.jxyzh11.springbootdemo.config.exception.SystemErrorCodeEnum;
 import com.jxyzh11.springbootdemo.entity.User;
 import com.jxyzh11.springbootdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +24,15 @@ public class ApiController {
     private UserService userService;
 
     @GetMapping(value = "get")
-    public User get(User user) {
-        user = userService.get(user);
+    public User get(User user) throws GlobalException {
+        if (user.getId() == null) {
+            throw new GlobalException(UserErrorCodeEnum.id_not_be_null);
+        }
+        try {
+            user = userService.get(user);
+        } catch (Exception e) {
+            throw new GlobalException(SystemErrorCodeEnum.EXCEPTION);
+        }
         return user;
     }
 
