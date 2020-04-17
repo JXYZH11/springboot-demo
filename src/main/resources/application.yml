@@ -77,6 +77,11 @@ spring:
         max-wait: -1
         #表示idle object evitor两次扫描之间要sleep的毫秒数，逐出扫描的时间间隔（毫秒），如果为负数，则不运行逐出线程，默认为-1
         time-between-eviction-runs: -1
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
