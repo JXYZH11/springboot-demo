@@ -1,18 +1,13 @@
 package com.jxyzh11.springbootdemo.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jxyzh11.springbootdemo.UserErrorCodeEnum;
-import com.jxyzh11.springbootdemo.config.exception.GlobalException;
-import com.jxyzh11.springbootdemo.config.exception.SystemErrorCodeEnum;
+import com.jxyzh11.springbootdemo.config.exception.ResponseEnum;
 import com.jxyzh11.springbootdemo.config.redis.RedisService;
 import com.jxyzh11.springbootdemo.entity.User;
 import com.jxyzh11.springbootdemo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.processing.SupportedAnnotationTypes;
 
 /**
  * @ClassName: ApiController
@@ -33,17 +28,10 @@ public class ApiController {
     private RedisService redisService;
 
     @GetMapping(value = "get")
-    public User get(User user) throws GlobalException {
-        if (user.getId() == null) {
-            throw new GlobalException(UserErrorCodeEnum.id_not_be_null);
-        }
-        try {
-            user = userService.get(user);
-            redisService.setObject("user." + user.getId(), user.getName(), 7200L);
-        } catch (Exception e) {
-            log.error("e", e);
-            throw new GlobalException(SystemErrorCodeEnum.EXCEPTION);
-        }
+    public User get(User user) throws Exception {
+        ResponseEnum.ID_IS_NULL.assertNotNull(user.getId());
+        user = userService.get(user);
+        //redisService.setObject("user." + user.getId(), user.getName(), 7200L);
         return user;
     }
 

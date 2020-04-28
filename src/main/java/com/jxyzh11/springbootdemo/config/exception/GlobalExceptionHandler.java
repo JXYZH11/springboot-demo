@@ -19,9 +19,21 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = GlobalException.class)
-    public ExceptionResponse handleException(HttpServletRequest request, GlobalException e) {
-        ErrorCodeInterface errorCode = e.getErrorCode();
-        return new ExceptionResponse(errorCode.getCode(), errorCode.getMessage());
+    @ExceptionHandler(value = BaseException.class)
+    public ExceptionResponse handleException(HttpServletRequest request, BaseException e) {
+        log.error(e.getMessage(), e);
+        return new ExceptionResponse(e.getResponseEnum().getCode(), e.getMessage());
+    }
+
+    /**
+     * 未定义异常
+     *
+     * @param e 异常
+     * @return 异常结果
+     */
+    @ExceptionHandler(value = Exception.class)
+    public ExceptionResponse handleException(Exception e) {
+        log.error(e.getMessage(), e);
+        return new ExceptionResponse(ResponseEnum.SERVER_ERROR.getCode(), ResponseEnum.SERVER_ERROR.getMessage());
     }
 }

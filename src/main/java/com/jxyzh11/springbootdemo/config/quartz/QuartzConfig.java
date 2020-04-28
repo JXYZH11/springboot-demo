@@ -42,7 +42,7 @@ public class QuartzConfig {
             @Override
             protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                log.debug("QuartzJob2----{}", sdf.format(new Date()));
+                //log.debug("QuartzJob2----{}", sdf.format(new Date()));
             }
         };
         return JobBuilder.newJob(quartzJob2.getClass()).storeDurably().build();

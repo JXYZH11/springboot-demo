@@ -20,6 +20,6 @@ public class QuartzJob1 extends QuartzJobBean {
 
     protected void executeInternal(JobExecutionContext var1) throws JobExecutionException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        log.debug("QuartzJob1----{}", sdf.format(new Date()));
+        //log.debug("QuartzJob1----{}", sdf.format(new Date()));
     }
 }
