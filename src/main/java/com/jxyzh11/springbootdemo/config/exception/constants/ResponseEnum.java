@@ -4,12 +4,14 @@ import com.jxyzh11.springbootdemo.config.exception.GlobalExceptionAssert;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * 一般级别异常常数
+ */
 @Getter
 @AllArgsConstructor
 public enum ResponseEnum implements GlobalExceptionAssert {
 
-    ID_IS_NULL(10001, "id不能为空")
-    ;
+    ID_IS_NULL(10001, "id不能为空");
 
     /**
      * 返回码

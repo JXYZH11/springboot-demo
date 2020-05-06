@@ -4,6 +4,9 @@ import com.jxyzh11.springbootdemo.config.exception.entity.GlobalException;
 
 import java.text.MessageFormat;
 
+/**
+ * 全局异常Assert接口
+ */
 public interface GlobalExceptionAssert extends IResponseEnum, Assert {
 
     @Override

@@ -4,12 +4,14 @@ import com.jxyzh11.springbootdemo.config.exception.GlobalExceptionAssert;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * 服务级别异常常数
+ */
 @Getter
 @AllArgsConstructor
-public enum CommonResponseEnum implements GlobalExceptionAssert {
+public enum ServerResponseEnum implements GlobalExceptionAssert {
 
-    SERVER_ERROR(10002, "服务器异常")
-    ;
+    SERVER_ERROR(10002, "服务器异常");
 
     /**
      * 返回码

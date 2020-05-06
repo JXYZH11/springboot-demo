@@ -2,6 +2,9 @@ package com.jxyzh11.springbootdemo.config.exception;
 
 import com.jxyzh11.springbootdemo.config.exception.entity.GlobalException;
 
+/**
+ * 自定义assert接口
+ */
 public interface Assert {
 
     /**

@@ -2,7 +2,7 @@ package com.jxyzh11.springbootdemo.config.exception.handler;
 
 import com.jxyzh11.springbootdemo.config.exception.entity.ExceptionResponse;
 import com.jxyzh11.springbootdemo.config.exception.entity.GlobalException;
-import com.jxyzh11.springbootdemo.config.exception.constants.CommonResponseEnum;
+import com.jxyzh11.springbootdemo.config.exception.constants.ServerResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.net.URLDecoder;
 
 /**
- * 统一异常处理
+ * 全局统一异常处理
  *
  * @ClassName: GlobalExceptionHandler
  * @Description: TODO
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     public ExceptionResponse handleException(HttpServletRequest request, Exception e) {
         logErrorRequest(request);
         log.error(e.getMessage(), e);
-        return new ExceptionResponse(CommonResponseEnum.SERVER_ERROR.getCode(), CommonResponseEnum.SERVER_ERROR.getMessage());
+        return new ExceptionResponse(ServerResponseEnum.SERVER_ERROR.getCode(), ServerResponseEnum.SERVER_ERROR.getMessage());
     }
 
     /**

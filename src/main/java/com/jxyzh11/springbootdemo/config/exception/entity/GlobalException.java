@@ -3,6 +3,8 @@ package com.jxyzh11.springbootdemo.config.exception.entity;
 import com.jxyzh11.springbootdemo.config.exception.IResponseEnum;
 
 /**
+ * 基础异常实体类
+ *
  * @ClassName: BaseException
  * @Description: TODO
  * @Author: JXYZH11

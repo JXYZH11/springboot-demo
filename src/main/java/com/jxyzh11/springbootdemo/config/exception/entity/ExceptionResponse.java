@@ -1,7 +1,7 @@
 package com.jxyzh11.springbootdemo.config.exception.entity;
 
 /**
- * 异常返回实体类型
+ * 异常返回实体类
  *
  * @ClassName: ResultBody
  * @Description: TODO
