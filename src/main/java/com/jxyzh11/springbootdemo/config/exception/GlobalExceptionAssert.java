@@ -1,5 +1,7 @@
 package com.jxyzh11.springbootdemo.config.exception;
 
+import com.jxyzh11.springbootdemo.config.exception.entity.GlobalException;
+
 import java.text.MessageFormat;
 
 public interface GlobalExceptionAssert extends IResponseEnum, Assert {

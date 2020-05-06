@@ -1,5 +1,6 @@
-package com.jxyzh11.springbootdemo.config.exception;
+package com.jxyzh11.springbootdemo.config.exception.constants;
 
+import com.jxyzh11.springbootdemo.config.exception.GlobalExceptionAssert;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

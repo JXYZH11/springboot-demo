@@ -1,7 +1,7 @@
 package com.jxyzh11.springbootdemo.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jxyzh11.springbootdemo.config.exception.ResponseEnum;
+import com.jxyzh11.springbootdemo.config.exception.constants.ResponseEnum;
 import com.jxyzh11.springbootdemo.config.redis.RedisService;
 import com.jxyzh11.springbootdemo.entity.User;
 import com.jxyzh11.springbootdemo.service.UserService;

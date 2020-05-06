@@ -1,4 +1,6 @@
-package com.jxyzh11.springbootdemo.config.exception;
+package com.jxyzh11.springbootdemo.config.exception.entity;
+
+import com.jxyzh11.springbootdemo.config.exception.IResponseEnum;
 
 /**
  * @ClassName: BaseException
