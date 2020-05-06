@@ -8,7 +8,7 @@ public interface Assert {
      * @param args
      * @return
      */
-    BaseException newException(Object... args);
+    GlobalException newException(Object... args);
 
     /**
      * 创建异常
@@ -17,7 +17,7 @@ public interface Assert {
      * @param args
      * @return
      */
-    BaseException newException(Throwable t, Object... args);
+    GlobalException newException(Throwable t, Object... args);
 
     /**
      * <p>断言对象<code>obj</code>非空。如果对象<code>obj</code>为空，则抛出异常

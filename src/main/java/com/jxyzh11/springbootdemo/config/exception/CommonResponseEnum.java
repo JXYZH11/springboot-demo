@@ -5,12 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum CommonResponseEnum {
+public enum CommonResponseEnum implements GlobalExceptionAssert{
 
-    /**
-     * Bad licence type
-     */
-    SERVER_ERROR(7001, "Bad licence type.");
+    SERVER_ERROR(10002, "服务器异常")
+    ;
 
     /**
      * 返回码

@@ -5,16 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ResponseEnum implements BusinessExceptionAssert {
+public enum ResponseEnum implements GlobalExceptionAssert {
 
-    /**
-     * Bad licence type
-     */
-    ID_IS_NULL(10001, "id不能为空"),
-    /**
-     * Licence not found
-     */
-    SERVER_ERROR(10002, "服务器异常");
+    ID_IS_NULL(10001, "id不能为空")
+    ;
 
     /**
      * 返回码

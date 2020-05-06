@@ -27,11 +27,11 @@ public class ApiController {
     @Autowired
     private RedisService redisService;
 
-    @GetMapping(value = "get")
+    @RequestMapping(value = "get")
     public User get(User user) throws Exception {
         ResponseEnum.ID_IS_NULL.assertNotNull(user.getId());
         user = userService.get(user);
-        //redisService.setObject("user." + user.getId(), user.getName(), 7200L);
+        redisService.setObject("user." + user.getId(), user.getName(), 7200L);
         return user;
     }
 
