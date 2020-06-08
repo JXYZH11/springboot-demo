@@ -1,5 +1,6 @@
 package com.jxyzh11.springbootdemo.config.exception.entity;
 
+import com.jxyzh11.springbootdemo.config.exception.IOpenapiResponseEnum;
 import com.jxyzh11.springbootdemo.config.exception.IResponseEnum;
 
 /**
@@ -14,6 +15,7 @@ import com.jxyzh11.springbootdemo.config.exception.IResponseEnum;
 public class GlobalException extends Exception {
 
     public IResponseEnum responseEnum;
+    public IOpenapiResponseEnum responseV3Enum;
     public Object[] args;
     public String message;
     public Throwable cause;
@@ -31,12 +33,33 @@ public class GlobalException extends Exception {
         this.cause = cause;
     }
 
+    public GlobalException(IOpenapiResponseEnum responseV3Enum, Object[] args, String message) {
+        this.responseV3Enum = responseV3Enum;
+        this.args = args;
+        this.message = message;
+    }
+
+    public GlobalException(IOpenapiResponseEnum responseV3Enum, Object[] args, String message, Throwable cause) {
+        this.responseV3Enum = responseV3Enum;
+        this.args = args;
+        this.message = message;
+        this.cause = cause;
+    }
+
     public IResponseEnum getResponseEnum() {
         return responseEnum;
     }
 
     public void setResponseEnum(IResponseEnum responseEnum) {
         this.responseEnum = responseEnum;
+    }
+
+    public IOpenapiResponseEnum getResponseV3Enum() {
+        return responseV3Enum;
+    }
+
+    public void setResponseV3Enum(IOpenapiResponseEnum responseV3Enum) {
+        this.responseV3Enum = responseV3Enum;
     }
 
     public Object[] getArgs() {

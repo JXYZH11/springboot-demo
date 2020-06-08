@@ -1,17 +1,19 @@
 package com.jxyzh11.springbootdemo.config.exception.handler;
 
+import com.alibaba.fastjson.JSONObject;
+import com.jxyzh11.springbootdemo.common.entity.ApiResponseCode;
+import com.jxyzh11.springbootdemo.common.utils.RequestUtil;
+import com.jxyzh11.springbootdemo.config.exception.constants.AssertEnum;
+import com.jxyzh11.springbootdemo.config.exception.constants.OpenapiAssertEnum;
 import com.jxyzh11.springbootdemo.config.exception.entity.ExceptionResponse;
 import com.jxyzh11.springbootdemo.config.exception.entity.GlobalException;
-import com.jxyzh11.springbootdemo.config.exception.constants.ServerResponseEnum;
+import com.jxyzh11.springbootdemo.config.exception.entity.OpenapiExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLDecoder;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 全局统一异常处理
@@ -27,9 +29,14 @@ import java.net.URLDecoder;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = GlobalException.class)
-    public ExceptionResponse handleException(HttpServletRequest request, GlobalException e) {
-        logErrorRequest(request);
+    public Object handleException(HttpServletRequest request, HttpServletResponse response, GlobalException e) {
+        JSONObject requestObject = logRequest(request);
         log.error(e.getMessage(), e);
+
+        if (e.getResponseV3Enum() != null) {
+            response.setStatus(ApiResponseCode.param_validate_failed);
+            return new OpenapiExceptionResponse(e.getResponseV3Enum().getError_no(), e.getMessage(), e.getResponseV3Enum().getError_code());
+        }
         return new ExceptionResponse(e.getResponseEnum().getCode(), e.getMessage());
     }
 
@@ -40,41 +47,32 @@ public class GlobalExceptionHandler {
      * @return 异常结果
      */
     @ExceptionHandler(value = Exception.class)
-    public ExceptionResponse handleException(HttpServletRequest request, Exception e) {
-        logErrorRequest(request);
+    public Object handleException(HttpServletRequest request, HttpServletResponse response, Exception e) {
+        JSONObject requestObject = logRequest(request);
         log.error(e.getMessage(), e);
-        return new ExceptionResponse(ServerResponseEnum.SERVER_ERROR.getCode(), ServerResponseEnum.SERVER_ERROR.getMessage());
+
+        if (request.getRequestURI().contains("/openapi-fmxos/")) {
+            response.setStatus(ApiResponseCode.unknown_server_error);
+            return new OpenapiExceptionResponse(OpenapiAssertEnum.SERVER_ERROR.getError_no(), OpenapiAssertEnum.SERVER_ERROR.getError_desc(), OpenapiAssertEnum.SERVER_ERROR.getError_code());
+        }
+        return new ExceptionResponse(AssertEnum.SERVER_ERROR.getCode(), AssertEnum.SERVER_ERROR.getMessage());
     }
 
     /**
-     * 获取POST请求中Body参数
+     * 获取请求信息
      *
      * @param request
      * @return 字符串
      */
-    public static void logErrorRequest(HttpServletRequest request) {
-        try {
-            if ("GET".equals(request.getMethod())) {
-                String paramsString = URLDecoder.decode(request.getQueryString(), "UTF-8");
-                log.error(request.getRequestURI() + "?" + paramsString);
-            }
-            if ("POST".equals(request.getMethod())) {
-                log.error(request.getRequestURI());
-                InputStream is = request.getInputStream();
-                String contentStr = IOUtils.toString(is, "utf-8");
-                String[] params = contentStr.split("&");
-                for (String param : params) {
-                    if (param.split("=").length == 2) {
-                        request.setAttribute(param.split("=")[0], param.split("=")[1]);
-                        log.error(param.split("=")[0] + ":" + URLDecoder.decode(param.split("=")[1], "UTF-8"));
-                    } else {
-                        request.setAttribute(param.split("=")[0], "");
-                        log.error(param.split("=")[0] + ":");
-                    }
-                }
-            }
-        } catch (IOException e) {
-            log.error("error", e);
-        }
+    public static JSONObject logRequest(HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        String method = request.getMethod();
+        String url = request.getRequestURI();
+        String params = RequestUtil.createLinkString(RequestUtil.toVerifyMap(request.getParameterMap()));
+        log.error("{}:{}?{}", method, url, params);
+        jsonObject.put("method", method);
+        jsonObject.put("url", url);
+        jsonObject.put("params", params);
+        return jsonObject;
     }
 }

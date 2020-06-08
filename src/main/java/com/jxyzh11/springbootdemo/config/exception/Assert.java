@@ -1,6 +1,10 @@
 package com.jxyzh11.springbootdemo.config.exception;
 
 import com.jxyzh11.springbootdemo.config.exception.entity.GlobalException;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
  * 自定义assert接口
@@ -25,25 +29,70 @@ public interface Assert {
     GlobalException newException(Throwable t, Object... args);
 
     /**
-     * <p>断言对象<code>obj</code>非空。如果对象<code>obj</code>为空，则抛出异常
+     * 断言对象如果为空，抛出异常
      *
-     * @param obj 待判断对象
+     * @param var 待判断对象
+     * @throws Exception
      */
-    default void assertNotNull(Object obj) throws Exception {
-        if (obj == null) {
-            throw newException(obj);
+    default void notNull(Object var) throws Exception {
+        if (var instanceof String) {
+            String str = String.valueOf(var);
+            if (StringUtils.isBlank(str) || "undefined".equals(str) || "null".equals(str)) {
+                throw newException(var);
+            }
+        }
+        if (var instanceof Integer || var instanceof Long) {
+            if (var == null) {
+                throw newException(var);
+            }
+        }
+        if (var instanceof Boolean) {
+            if (var == null) {
+                throw newException(var);
+            }
+        }
+        if (var instanceof List) {
+            List list = (List) var;
+            if (CollectionUtils.isEmpty(list)) {
+                throw newException(var);
+            }
+        }
+        if (var == null) {
+            throw newException(var);
         }
     }
 
     /**
-     * <p>断言对象<code>obj</code>非空。如果对象<code>obj</code>为空，则抛出异常
-     * <p>异常信息<code>message</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
+     * 断言对象如果为空，抛出异常
      *
-     * @param obj  待判断对象
+     * @param var  待判断对象
      * @param args message占位符对应的参数列表
+     * @throws Exception
      */
-    default void assertNotNull(Object obj, Object... args) throws Exception {
-        if (obj == null) {
+    default void notNull(Object var, Object... args) throws Exception {
+        if (var instanceof String) {
+            String str = String.valueOf(var);
+            if (StringUtils.isBlank(str) || "undefined".equals(str) || "null".equals(str)) {
+                throw newException(args);
+            }
+        }
+        if (var instanceof Integer || var instanceof Long) {
+            if (var == null) {
+                throw newException(args);
+            }
+        }
+        if (var instanceof Boolean) {
+            if (var == null) {
+                throw newException(args);
+            }
+        }
+        if (var instanceof List) {
+            List list = (List) var;
+            if (CollectionUtils.isEmpty(list)) {
+                throw newException(args);
+            }
+        }
+        if (var == null) {
             throw newException(args);
         }
     }

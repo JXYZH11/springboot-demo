@@ -1,11 +1,12 @@
 package com.jxyzh11.springbootdemo.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jxyzh11.springbootdemo.config.exception.constants.ResponseEnum;
+import com.jxyzh11.springbootdemo.config.exception.constants.AssertEnum;
 import com.jxyzh11.springbootdemo.config.redis.RedisService;
 import com.jxyzh11.springbootdemo.entity.User;
 import com.jxyzh11.springbootdemo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class ApiController {
 
     @RequestMapping(value = "get")
     public User get(User user) throws Exception {
-        ResponseEnum.ID_IS_NULL.assertNotNull(user.getId());
+        AssertEnum.ID_IS_NULL.notNull(user.getId());
         user = userService.get(user);
         redisService.setObject("user." + user.getId(), user.getName(), 7200L);
         return user;

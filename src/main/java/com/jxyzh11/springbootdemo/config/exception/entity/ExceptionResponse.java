@@ -1,5 +1,7 @@
 package com.jxyzh11.springbootdemo.config.exception.entity;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 异常返回实体类
  *
@@ -12,11 +14,12 @@ package com.jxyzh11.springbootdemo.config.exception.entity;
 public class ExceptionResponse {
 
     public Integer code;
-    private String message;
+    private String msg;
+    private Object result = new JSONObject();
 
-    public ExceptionResponse(Integer code, String message) {
+    public ExceptionResponse(Integer code, String msg) {
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
 
     public Integer getCode() {
@@ -27,11 +30,19 @@ public class ExceptionResponse {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
     }
 }
